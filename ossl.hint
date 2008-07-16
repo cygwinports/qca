@@ -1,0 +1,7 @@
+category: KDE
+requires: cygwin libqca2 libQtCore4 openssl
+sdesc: "Qt4 Cryptographic Architecture (OpenSSL plugin)"
+ldesc: "Qt Cryptographic Architecture aims to provide a straightforward 
+and cross-platform crypto API, using Qt datatypes and conventions. QCA 
+separates the API from the implementation, using plugins known as 
+Providers."

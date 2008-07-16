@@ -1,0 +1,88 @@
+qca2
+------------------------------------------
+Qt Cryptographic Architecture aims to provide a straightforward and 
+cross-platform crypto API, using Qt datatypes and conventions. QCA 
+separates the API from the implementation, using plugins known as 
+Providers.
+
+Runtime requirements:
+  cygwin-1.5.25-15
+  libQtCore4-4.4.0-1
+
+Build requirements:
+(besides corresponding -devel packages)
+  binutils-20080523-2
+  cygport-0.3.13-1
+  gcc-core-3.4.4-3
+  gcc-g++-3.4.4-3
+  make-3.81-1
+
+Canonical website:
+  http://delta.affinix.com/qca/
+
+Canonical download:
+  http://delta.affinix.com/download/qca/2.0/
+
+-------------------------------------------
+
+Build instructions:
+  unpack qca2-2.0.0-X-src.tar.bz2
+    if you use setup to install this src package, it will be
+	 unpacked under /usr/src automatically
+  cd /usr/src
+  cygport ./qca2-2.0.0-X.cygport all
+
+This will create:
+  /usr/src/libqca2-dev-2.0.0-X.tar.bz2
+  /usr/src/libqca2-2.0.0-X.tar.bz2
+  /usr/src/qca2-2.0.0-X-src.tar.bz2
+  /usr/src/qca2-2.0.0-X.tar.bz2
+
+-------------------------------------------
+
+Files included in the binary packages:
+
+(qca2)
+  /usr/bin/qcatool2.exe
+  /usr/share/doc/qca2-2.0.0/COPYING
+  /usr/share/doc/qca2-2.0.0/INSTALL
+  /usr/share/doc/qca2-2.0.0/README
+  /usr/share/doc/qca2-2.0.0/TODO
+  /usr/share/man/man1/qcatool2.1.gz
+
+(libqca2)
+  /usr/bin/cygqca-2.dll
+  /usr/share/qca/certs/README
+  /usr/share/qca/certs/rootcerts.pem
+
+(libqca2-dev)
+  /usr/include/qt4/QtCrypto/QtCrypto
+  /usr/include/qt4/QtCrypto/qca.h
+  /usr/include/qt4/QtCrypto/qca_basic.h
+  /usr/include/qt4/QtCrypto/qca_cert.h
+  /usr/include/qt4/QtCrypto/qca_core.h
+  /usr/include/qt4/QtCrypto/qca_export.h
+  /usr/include/qt4/QtCrypto/qca_keystore.h
+  /usr/include/qt4/QtCrypto/qca_publickey.h
+  /usr/include/qt4/QtCrypto/qca_securelayer.h
+  /usr/include/qt4/QtCrypto/qca_securemessage.h
+  /usr/include/qt4/QtCrypto/qca_support.h
+  /usr/include/qt4/QtCrypto/qca_textfilter.h
+  /usr/include/qt4/QtCrypto/qca_tools.h
+  /usr/include/qt4/QtCrypto/qcaprovider.h
+  /usr/include/qt4/QtCrypto/qpipe.h
+  /usr/lib/pkgconfig/qca2.pc
+  /usr/lib/qt4/lib/libqca.dll.a
+  /usr/lib/qt4/lib/libqca.prl
+  /usr/share/qt4/mkspecs/features/crypto.prf
+
+------------------
+
+Port Notes:
+
+----- version 2.0.0-1 -----
+Initial release of Qt4 branch for Cygwin.
+
+
+Cygwin port maintained by:
+http://cygwinports.dotsrc.org/
