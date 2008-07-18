@@ -33,7 +33,7 @@ Build instructions:
   cygport ./qca2-2.0.0-X.cygport all
 
 This will create:
-  /usr/src/libqca2-dev-2.0.0-X.tar.bz2
+  /usr/src/libqca2-devel-2.0.0-X.tar.bz2
   /usr/src/libqca2-2.0.0-X.tar.bz2
   /usr/src/qca2-2.0.0-X-src.tar.bz2
   /usr/src/qca2-2.0.0-X.tar.bz2
@@ -55,7 +55,7 @@ Files included in the binary packages:
   /usr/share/qca/certs/README
   /usr/share/qca/certs/rootcerts.pem
 
-(libqca2-dev)
+(libqca2-devel)
   /usr/include/qt4/QtCrypto/QtCrypto
   /usr/include/qt4/QtCrypto/qca.h
   /usr/include/qt4/QtCrypto/qca_basic.h
