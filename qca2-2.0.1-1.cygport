@@ -5,6 +5,7 @@ inherit qt4-qmake
 DESCRIPTION="Qt Cryptographic Architecture"
 HOMEPAGE="http://delta.affinix.com/qca"
 SRC_URI="http://delta.affinix.com/download/qca/${PV_MAJ_MIN}/${ORIG_PN}-${PV}.tar.bz2"
+PATCH_URI="2.0-termios.patch"
 
 PKG_NAMES="${PN} lib${PN} lib${PN}-devel"
 PKG_HINTS="bin lib devel"
