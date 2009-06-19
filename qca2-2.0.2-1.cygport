@@ -8,10 +8,9 @@ SRC_URI="http://delta.affinix.com/download/qca/${PV_MAJ_MIN}/${ORIG_PN}-${PV}.ta
 PATCH_URI="2.0-termios.patch"
 
 PKG_NAMES="${PN} lib${PN} lib${PN}-devel"
-PKG_HINTS="bin lib devel"
-PKG_CONTENTS[0]="usr/bin/*.exe usr/share/doc/ usr/share/man/"
-PKG_CONTENTS[1]="usr/bin/*.dll usr/share/qca/"
-PKG_CONTENTS[2]="usr/include/ usr/lib/ ${QT4_DATADIR#/}"
+qca2_CONTENTS="usr/bin/*.exe usr/share/doc/ usr/share/man/"
+libqca2_CONTENTS="usr/bin/cygqca-2.dll usr/share/qca/"
+libqca2_devel_CONTENTS="usr/include/ usr/lib/ ${QT4_DATADIR#/}"
 
 src_compile() {
 	lndirs

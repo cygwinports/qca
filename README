@@ -6,16 +6,18 @@ separates the API from the implementation, using plugins known as
 Providers.
 
 Runtime requirements:
-  cygwin-1.5.25-15
-  libQtCore4-4.4.1-1
+  cygwin-1.7.0-49
+  libgcc1-4.3.2-2
+  libQtCore4-4.5.1-1
+  libstdc++6-4.3.2-2
 
 Build requirements:
 (besides corresponding -devel packages)
   binutils-20080624-2
-  cygport-0.4.0-1
-  gcc-core-3.4.4-3
-  gcc-g++-3.4.4-3
-  make-3.81-1
+  cygport-0.9.7-1
+  gcc4-core-4.3.2-2
+  gcc4-g++-4.3.2-2
+  make-3.81-2
 
 Canonical website:
   http://delta.affinix.com/qca/
@@ -26,17 +28,17 @@ Canonical download:
 -------------------------------------------
 
 Build instructions:
-  unpack qca2-2.0.1-X-src.tar.bz2
+  unpack qca2-2.0.2-X-src.tar.bz2
     if you use setup to install this src package, it will be
 	 unpacked under /usr/src automatically
   cd /usr/src
-  cygport ./qca2-2.0.1-X.cygport all
+  cygport ./qca2-2.0.2-X.cygport all
 
 This will create:
-  /usr/src/libqca2-devel-2.0.1-X.tar.bz2
-  /usr/src/libqca2-2.0.1-X.tar.bz2
-  /usr/src/qca2-2.0.1-X-src.tar.bz2
-  /usr/src/qca2-2.0.1-X.tar.bz2
+  /usr/src/libqca2-devel-2.0.2-X.tar.bz2
+  /usr/src/libqca2-2.0.2-X.tar.bz2
+  /usr/src/qca2-2.0.2-X-src.tar.bz2
+  /usr/src/qca2-2.0.2-X.tar.bz2
 
 -------------------------------------------
 
@@ -44,10 +46,9 @@ Files included in the binary packages:
 
 (qca2)
   /usr/bin/qcatool2.exe
-  /usr/share/doc/qca2-2.0.1/COPYING
-  /usr/share/doc/qca2-2.0.1/INSTALL
-  /usr/share/doc/qca2-2.0.1/README
-  /usr/share/doc/qca2-2.0.1/TODO
+  /usr/share/doc/qca2/COPYING
+  /usr/share/doc/qca2/README
+  /usr/share/doc/qca2/TODO
   /usr/share/man/man1/qcatool2.1.gz
 
 (libqca2)
@@ -80,11 +81,8 @@ Files included in the binary packages:
 
 Port Notes:
 
------ version 2.0.1-1 -----
-Version bump.
-
------ version 2.0.0-1 -----
-Initial release of Qt4 branch for Cygwin.
+----- version 2.0.2-1 -----
+Initial release of Qt4 branch for Cygwin 1.7.
 
 
 Cygwin port maintained by:
