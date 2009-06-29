@@ -1,5 +1,5 @@
 category: KDE
-requires: cygwin libgcc1 libQtCore4 libstdc++6
+requires: libgcc1 libQtCore4 libstdc++6
 external-source: qca2
 sdesc: "Qt4 Cryptographic Architecture (library)"
 ldesc: "Qt Cryptographic Architecture aims to provide a straightforward 
