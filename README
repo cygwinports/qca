@@ -6,9 +6,9 @@ separates the API from the implementation, using plugins known as
 Providers.
 
 Runtime requirements:
-  cygwin-1.7.0-49
+  cygwin-1.7.0-51
   libgcc1-4.3.2-2
-  libQtCore4-4.5.1-1
+  libQtCore4-4.5.2-1
   libstdc++6-4.3.2-2
 
 Build requirements:
@@ -80,6 +80,9 @@ Files included in the binary packages:
 ------------------
 
 Port Notes:
+
+----- version 2.0.2-2 -----
+Fixed pipe I/O.
 
 ----- version 2.0.2-1 -----
 Initial release of Qt4 branch for Cygwin 1.7.

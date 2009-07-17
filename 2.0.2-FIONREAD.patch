@@ -1,0 +1,10 @@
+--- origsrc/qca-2.0.2/src/support/qpipe.cpp	2008-05-16 20:39:05.000000000 -0500
++++ src/qca-2.0.2/src/support/qpipe.cpp	2009-07-16 17:17:36.590333400 -0500
+@@ -51,6 +51,7 @@
+ # include <errno.h>
+ # include <sys/ioctl.h>
+ # include <signal.h>
++# include <sys/socket.h>
+ # ifdef HAVE_SYS_FILIO_H
+ #  include <sys/filio.h>
+ # endif
