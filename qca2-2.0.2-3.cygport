@@ -26,3 +26,8 @@ src_compile() {
 		|| error "configure failed"
 	cygmake
 }
+
+src_test() {
+	cd ${B}/unittest
+	make -k test || true
+}

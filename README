@@ -6,17 +6,17 @@ separates the API from the implementation, using plugins known as
 Providers.
 
 Runtime requirements:
-  cygwin-1.7.0-51
-  libgcc1-4.3.2-2
-  libQtCore4-4.5.2-1
-  libstdc++6-4.3.2-2
+  cygwin-1.7.7-1
+  libgcc1-4.5.0-1
+  libQtCore4-4.6.3-1
+  libstdc++6-4.5.0-1
 
 Build requirements:
 (besides corresponding -devel packages)
-  binutils-20080624-2
-  cygport-0.9.7-1
-  gcc4-core-4.3.2-2
-  gcc4-g++-4.3.2-2
+  binutils-2.20.51-2
+  cygport-0.10.0-1
+  gcc4-core-4.5.0-1
+  gcc4-g++-4.5.0-1
   make-3.81-2
 
 Canonical website:
@@ -42,44 +42,10 @@ This will create:
 
 -------------------------------------------
 
-Files included in the binary packages:
-
-(qca2)
-  /usr/bin/qcatool2.exe
-  /usr/share/doc/qca2/COPYING
-  /usr/share/doc/qca2/README
-  /usr/share/doc/qca2/TODO
-  /usr/share/man/man1/qcatool2.1.gz
-
-(libqca2)
-  /usr/bin/cygqca-2.dll
-  /usr/share/qca/certs/README
-  /usr/share/qca/certs/rootcerts.pem
-
-(libqca2-devel)
-  /usr/include/qt4/QtCrypto/QtCrypto
-  /usr/include/qt4/QtCrypto/qca.h
-  /usr/include/qt4/QtCrypto/qca_basic.h
-  /usr/include/qt4/QtCrypto/qca_cert.h
-  /usr/include/qt4/QtCrypto/qca_core.h
-  /usr/include/qt4/QtCrypto/qca_export.h
-  /usr/include/qt4/QtCrypto/qca_keystore.h
-  /usr/include/qt4/QtCrypto/qca_publickey.h
-  /usr/include/qt4/QtCrypto/qca_securelayer.h
-  /usr/include/qt4/QtCrypto/qca_securemessage.h
-  /usr/include/qt4/QtCrypto/qca_support.h
-  /usr/include/qt4/QtCrypto/qca_textfilter.h
-  /usr/include/qt4/QtCrypto/qca_tools.h
-  /usr/include/qt4/QtCrypto/qcaprovider.h
-  /usr/include/qt4/QtCrypto/qpipe.h
-  /usr/lib/pkgconfig/qca2.pc
-  /usr/lib/qt4/lib/libqca.dll.a
-  /usr/lib/qt4/lib/libqca.prl
-  /usr/share/qt4/mkspecs/features/crypto.prf
-
-------------------
-
 Port Notes:
+
+----- version 2.0.2-3 -----
+Rebuilt.
 
 ----- version 2.0.2-2 -----
 Fixed pipe I/O.
