@@ -1,0 +1,45 @@
+inherit qt4-qmake
+
+NAME="qca2"
+VERSION=2.0.3
+RELEASE=2
+CATEGORY="Libs"
+SUMMARY="Qt4 Cryptographic Architecture"
+DESCRIPTION="Qt Cryptographic Architecture aims to provide a straightforward
+and cross-platform crypto API, using Qt datatypes and conventions. QCA
+separates the API from the implementation, using plugins known as Providers."
+HOMEPAGE="http://delta.affinix.com/qca"
+SRC_URI="http://delta.affinix.com/download/qca/${VERSION%.*}/qca-${VERSION}.tar.bz2"
+SRC_DIR="qca-${VERSION}"
+PATCH_URI="
+	http://pkgs.fedoraproject.org/cgit/qca2.git/plain/qca-2.0.3-gcc47.patch
+	2.0.2-FIONREAD.patch
+"
+
+PKG_NAMES="qca2 libqca2 libqca2-devel"
+qca2_CONTENTS="usr/bin/*.exe usr/share/man/man1/"
+libqca2_REQUIRES="ca-certificates"
+libqca2_CONTENTS="usr/bin/cygqca-2.dll usr/share/doc/"
+libqca2_devel_CONTENTS="usr/include/ usr/lib/ ${QT4_DATADIR#/}"
+
+src_compile() {
+	lndirs
+	cd ${B}
+	./configure \
+		--prefix=/usr \
+		--includedir=${QT4_INCLUDEDIR} \
+		--libdir=${QT4_LIBDIR} \
+		--datadir=/usr/share \
+		--qtdir=${QT4_QTDIR} \
+		--certstore-path=/usr/ssl/certs/ca-bundle.crt \
+		--no-separate-debug-info \
+		|| error "configure failed"
+	cygqmake4 .
+	cygmake
+}
+
+src_test() {
+	cd ${B}/unittest
+	PATH="${B}/lib:${PATH}" \
+	make -k test || true
+}
