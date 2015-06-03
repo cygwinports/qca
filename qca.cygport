@@ -1,0 +1,126 @@
+inherit cmake qt4 qt5
+
+NAME="qca"
+VERSION=2.1.0
+RELEASE=1
+CATEGORY="Libs"
+SUMMARY="Qt Cryptographic Architecture"
+DESCRIPTION="Qt Cryptographic Architecture aims to provide a straightforward
+and cross-platform crypto API, using Qt datatypes and conventions. QCA
+separates the API from the implementation, using plugins known as Providers."
+HOMEPAGE="http://delta.affinix.com/qca"
+SRC_URI="http://delta.affinix.com/download/qca/2.0/qca-${VERSION}.tar.gz"
+SRC_DIR="qca-${VERSION}"
+PATCH_URI="
+	fedora/0001-dropped-unused-include.patch
+	fedora/0002-cmake-pkg-config-is-not-REQUIRED.patch
+	fedora/0003-qca-ossl-fixed-compilation-warnings.patch
+	fedora/0004-cmake-dropped-dead-variable.patch
+	fedora/0005-Fix-build-with-libressl.patch
+	fedora/0006-increased-minimum-cmake-version.patch
+	fedora/0007-cmake-warn-user-when-QCA_SUFFIX-is-not-set.patch
+	fedora/0008-cmake-apply-QCA_SUFFIX-for-cmake-config-module-names.patch
+	fedora/0009-cmake-build-for-android.patch
+	fedora/0010-fixed-compilation-on-android.patch
+	fedora/0011-simplified-md5_state_t-and-SHA1_CONTEXT-internal-str.patch
+	fedora/0012-cmake-fixed-warnings-on-android.patch
+	fedora/0013-docs-fixed-no-images-in-docs-when-build-out-of-sourc.patch
+	fedora/0014-cmake-fixed-cmake-config-module-when-used-QCA_SUFFIX.patch
+	fedora/0015-fix-library-name-in-prf-file-to-use-the-lib-name-var.patch
+	fedora/0016-move-QCA_CONFIG_NAME_BASE-definition-in-the-regular-.patch
+	fedora/0017-fixed-array-size-checking.patch
+	fedora/0019-prevent-filewatches-from-emitting-changes-when-there.patch
+	fedora/0020-put-headers-of-a-suffixed-build-in-a-suffixed-direct.patch
+	fedora/0021-properly-support-co-existing-qt4-and-qt5-versions.patch
+	fedora/0022-initialize-QCA_SUFFIX-cache-with-the-possibly-previo.patch
+	2.0.2-FIONREAD.patch
+"
+
+PKG_NAMES="qca libqca2 libqca-devel libqca-doc qca-qt5 libqca-qt5_2 libqca-qt5-devel"
+qca_OBSOLETES="qca2"
+qca_CONTENTS="
+	usr/bin/mozcerts.exe
+	usr/bin/qcatool.exe
+	usr/share/man/man1/qcatool.1*
+"
+libqca2_OBSOLETES="qca2-cyrus-sasl qca2-gnupg qca2-ossl"
+libqca2_REQUIRES="ca-certificates gnupg"
+libqca2_CONTENTS="
+	--exclude=html
+	usr/bin/cygqca-2.dll
+	${QT4_PLUGINSDIR#/}/crypto/
+	usr/share/doc/qca/
+"
+libqca_devel_OBSOLETES="libqca2-devel"
+libqca_devel_CONTENTS="
+	${QT4_INCLUDEDIR#/}/QtCrypto/
+	usr/lib/cmake/Qca/
+	usr/lib/libqca.dll.a
+	usr/lib/pkgconfig/qca2.pc
+	${QT4_MKSPECSDIR#/}/features/crypto.prf
+"
+libqca_doc_CATEGORY="Doc"
+libqca_doc_CONTENTS="usr/share/doc/qca/html/"
+qca_qt5_CONTENTS="
+	usr/bin/mozcerts-qt5.exe
+	usr/bin/qcatool-qt5.exe
+	usr/share/man/man1/qcatool-qt5.1*
+"
+libqca_qt5_2_REQUIRES="ca-certificates gnupg"
+libqca_qt5_2_CONTENTS="
+	usr/bin/cygqca-qt5-2.dll
+	${QT5_PLUGINSDIR#/}/crypto/
+	usr/share/doc/qca-qt5/
+"
+libqca_qt5_devel_CONTENTS="
+	${QT5_INCLUDEDIR#/}/QtCrypto/
+	usr/lib/cmake/Qca-qt5/
+	usr/lib/libqca-qt5.dll.a
+	usr/lib/pkgconfig/qca2-qt5.pc
+	${QT5_MKSPECSDIR#/}/features/crypto.prf
+"
+
+src_compile() {
+	mkdir -p ${B}/qt4
+	cd ${B}/qt4
+	cygcmake \
+		-DQT4_BUILD=ON \
+		-DQCA_DOC_INSTALL_DIR=/usr/share/doc/qca \
+		-DQCA_FEATURE_INSTALL_DIR=${QT4_MKSPECSDIR}/features \
+		-DQCA_INCLUDE_INSTALL_DIR=${QT4_INCLUDEDIR} \
+		-DQCA_PRIVATE_INCLUDE_INSTALL_DIR=${QT4_INCLUDEDIR} \
+		-DQCA_LIBRARY_INSTALL_DIR=${QT4_LIBDIR} \
+		-DQCA_PLUGINS_INSTALL_DIR=${QT4_PLUGINSDIR}
+	cygmake
+	cygmake doc
+
+	mkdir -p ${B}/qt5
+	cd ${B}/qt5
+	cygcmake \
+		-DQT4_BUILD=OFF \
+		-DQCA_DOC_INSTALL_DIR=/usr/share/doc/qca-qt5 \
+		-DQCA_FEATURE_INSTALL_DIR=${QT5_MKSPECSDIR}/features \
+		-DQCA_INCLUDE_INSTALL_DIR=${QT5_INCLUDEDIR} \
+		-DQCA_PRIVATE_INCLUDE_INSTALL_DIR=${QT5_INCLUDEDIR}/QtCrypto/${VERSION}/QtCrypto/private \
+		-DQCA_LIBRARY_INSTALL_DIR=${QT5_LIBDIR} \
+		-DQCA_PLUGINS_INSTALL_DIR=${QT5_PLUGINSDIR}
+	cygmake
+	# html docs are identical for qt4 and qt5
+}
+
+src_test() {
+	cd ${B}/qt4
+	make -k test || true
+	cd ${B}/qt5
+	make -k test || true
+}
+
+src_install() {
+	cd ${B}/qt4
+	cyginstall
+	dodoc apidocs/html
+	cd ${B}/qt5
+	cyginstall
+	docinto /qca-qt5
+	dodoc ${S}/{COPYING,README,TODO}
+}
