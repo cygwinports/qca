@@ -1,0 +1,26 @@
+From 69d8e070f0dd02f751a7996aa5ec5b8ad0d6dfb4 Mon Sep 17 00:00:00 2001
+From: Ivan Romanov <drizt@land.ru>
+Date: Wed, 11 Nov 2015 12:34:21 +0500
+Subject: [PATCH 09/11] Delete dead variable
+
+className is not used. Furthemore it leads to possible crash when no _instance.
+---
+ src/qca_plugin.cpp | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/src/qca_plugin.cpp b/src/qca_plugin.cpp
+index 1510864..3528337 100644
+--- a/src/qca_plugin.cpp
++++ b/src/qca_plugin.cpp
+@@ -150,8 +150,6 @@ public:
+ 
+ 	~PluginInstance()
+ 	{
+-		QString className = QString::fromLatin1(_instance->metaObject()->className());
+-
+ 		if(_ownInstance)
+ 			delete _instance;
+ 
+-- 
+2.5.0
+

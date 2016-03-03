@@ -1,0 +1,26 @@
+From db17d5969bd9407bba37d20a2fc6acb74f80c9e9 Mon Sep 17 00:00:00 2001
+From: Alon Bar-Lev <alon.barlev@gmail.com>
+Date: Fri, 23 Oct 2015 22:32:07 +0300
+Subject: [PATCH 01/11] plugins: qca-logger: README: fix typo
+
+Signed-off-by: Alon Bar-Lev <alon.barlev@gmail.com>
+---
+ plugins/qca-logger/README | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/plugins/qca-logger/README b/plugins/qca-logger/README
+index dfc8762..441afe3 100644
+--- a/plugins/qca-logger/README
++++ b/plugins/qca-logger/README
+@@ -32,7 +32,7 @@ CONFIGURATION
+ 	Configuration is stored at ~/.config/Affinix/QCA.conf, in order to
+ 	generate default configuration use:
+ 
+-	$ qcatool --config save qca-logger 
++	$ qcatool config save qca-logger
+ 
+ 	Attributes:
+ 		enabled (Boolean)
+-- 
+2.5.0
+

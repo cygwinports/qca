@@ -1,0 +1,142 @@
+From 7a76a9c0275bed7700a86654b29055c7592f5ef8 Mon Sep 17 00:00:00 2001
+From: Ivan Romanov <drizt@land.ru>
+Date: Wed, 28 Oct 2015 20:57:56 +0500
+Subject: [PATCH 04/11] qca-gnupg: default path to keyrings
+
+When no keys 'gpg --list-keys' doesn't return path to keyring file.
+Path is needest for watching to know when keys added or removed.
+Use default keyrings path based on GnuPG home directory. This
+directory gets with output 'gpg --version'. Line which starts with
+'Home: ' contains GnuPG home directory. I believe it is correct
+for GnuPG always and won't be changed in the future.
+---
+ plugins/qca-gnupg/gpgaction.cpp      | 15 ++++++++++++++-
+ plugins/qca-gnupg/gpgaction.h        |  1 +
+ plugins/qca-gnupg/gpgop.cpp          |  5 +++++
+ plugins/qca-gnupg/gpgop.h            |  1 +
+ plugins/qca-gnupg/mykeystorelist.cpp | 11 +++++++----
+ plugins/qca-gnupg/mykeystorelist.h   |  2 +-
+ 6 files changed, 29 insertions(+), 6 deletions(-)
+
+diff --git a/plugins/qca-gnupg/gpgaction.cpp b/plugins/qca-gnupg/gpgaction.cpp
+index 8f2ddba..f86f839 100644
+--- a/plugins/qca-gnupg/gpgaction.cpp
++++ b/plugins/qca-gnupg/gpgaction.cpp
+@@ -784,7 +784,20 @@ void GpgAction::processResult(int code)
+ 	}
+ 	else if(code == 0)
+ 	{
+-		if(input.op == GpgOp::SecretKeyringFile || input.op == GpgOp::PublicKeyringFile)
++		if(input.op == GpgOp::Check)
++		{
++			QStringList strList = outstr.split("\n");
++			foreach (const QString &str, strList)
++			{
++				if (!str.startsWith("Home: "))
++					continue;
++
++				output.homeDir = str.section(' ', 1);
++				break;
++			}
++			output.success = true;
++		}
++		else if(input.op == GpgOp::SecretKeyringFile || input.op == GpgOp::PublicKeyringFile)
+ 		{
+ 			if(findKeyringFilename(outstr, &output.keyringFile))
+ 				output.success = true;
+diff --git a/plugins/qca-gnupg/gpgaction.h b/plugins/qca-gnupg/gpgaction.h
+index 6c518e4..b8fb189 100644
+--- a/plugins/qca-gnupg/gpgaction.h
++++ b/plugins/qca-gnupg/gpgaction.h
+@@ -64,6 +64,7 @@ public:
+ 		QString signerId;
+ 		QDateTime timestamp;
+ 		GpgOp::VerifyResult verifyResult;
++		QString homeDir;
+ 
+ 		Output() : success(false), errorCode(GpgOp::ErrorUnknown), wasSigned(false) {}
+ 	};
+diff --git a/plugins/qca-gnupg/gpgop.cpp b/plugins/qca-gnupg/gpgop.cpp
+index 1691b81..811026b 100644
+--- a/plugins/qca-gnupg/gpgop.cpp
++++ b/plugins/qca-gnupg/gpgop.cpp
+@@ -456,6 +456,11 @@ QString GpgOp::keyringFile() const
+ 	return d->output.keyringFile;
+ }
+ 
++QString GpgOp::homeDir() const
++{
++	return d->output.homeDir;
++}
++
+ QString GpgOp::encryptedToId() const
+ {
+ 	return d->output.encryptedToId;
+diff --git a/plugins/qca-gnupg/gpgop.h b/plugins/qca-gnupg/gpgop.h
+index cf0bffc..7b11c6e 100644
+--- a/plugins/qca-gnupg/gpgop.h
++++ b/plugins/qca-gnupg/gpgop.h
+@@ -186,6 +186,7 @@ public:
+ 	Error errorCode() const;
+ 	KeyList keys() const;              // Keys
+ 	QString keyringFile() const;       // KeyringFile
++	QString homeDir() const;		   // GnuPG home directory
+ 	QString encryptedToId() const;     // Decrypt (for ErrorDecryptNoKey)
+ 	bool wasSigned() const;            // Decrypt
+ 	QString signerId() const;          // Verify
+diff --git a/plugins/qca-gnupg/mykeystorelist.cpp b/plugins/qca-gnupg/mykeystorelist.cpp
+index 93731b1..81e30e7 100644
+--- a/plugins/qca-gnupg/mykeystorelist.cpp
++++ b/plugins/qca-gnupg/mykeystorelist.cpp
+@@ -365,6 +365,7 @@ void MyKeyStoreList::gpg_finished()
+ 		{
+ 			// obtain keyring file names for monitoring
+ 			init_step = 1;
++			homeDir = gpg.homeDir();
+ 			gpg.doSecretKeyringFile();
+ 		}
+ 		// secret keyring filename
+@@ -372,10 +373,11 @@ void MyKeyStoreList::gpg_finished()
+ 		{
+ 			secring = QFileInfo(gpg.keyringFile()).canonicalFilePath();
+ 
+-			if(!secring.isEmpty())
++			if(secring.isEmpty())
+ 			{
+-				ringWatch.add(secring);
++				secring = homeDir + "/secring.gpg";
+ 			}
++			ringWatch.add(secring);
+ 
+ 			// obtain keyring file names for monitoring
+ 			init_step = 2;
+@@ -385,10 +387,11 @@ void MyKeyStoreList::gpg_finished()
+ 		else if(init_step == 2)
+ 		{
+ 			pubring = QFileInfo(gpg.keyringFile()).canonicalFilePath();
+-			if(!pubring.isEmpty())
++			if(pubring.isEmpty())
+ 			{
+-				ringWatch.add(pubring);
++				pubring = homeDir + "/pubring.gpg";
+ 			}
++			ringWatch.add(pubring);
+ 
+ 			// cache initial keyrings
+ 			init_step = 3;
+diff --git a/plugins/qca-gnupg/mykeystorelist.h b/plugins/qca-gnupg/mykeystorelist.h
+index 902154f..859da69 100644
+--- a/plugins/qca-gnupg/mykeystorelist.h
++++ b/plugins/qca-gnupg/mykeystorelist.h
+@@ -35,7 +35,7 @@ public:
+ 	bool initialized;
+ 	GpgOp gpg;
+ 	GpgOp::KeyList pubkeys, seckeys;
+-	QString pubring, secring;
++	QString pubring, secring, homeDir;
+ 	bool pubdirty, secdirty;
+ 	RingWatch ringWatch;
+ 	QMutex ringMutex;
+-- 
+2.5.0
+

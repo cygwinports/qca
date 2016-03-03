@@ -1,0 +1,36 @@
+From 4c9f27270e0a7c00c10cbc56ce5c6842b47e5ab2 Mon Sep 17 00:00:00 2001
+From: Ivan Romanov <drizt@land.ru>
+Date: Wed, 18 Nov 2015 19:22:13 +0500
+Subject: [PATCH 10/11] Add missed file
+
+This file must be a part of 4fd11c444a51e8d317b0d68c7b90a8e0f2c6af9f
+commit.
+
+REVIEW: 121703
+---
+ cmake/modules/FindCoreFoundation.cmake | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+ create mode 100644 cmake/modules/FindCoreFoundation.cmake
+
+diff --git a/cmake/modules/FindCoreFoundation.cmake b/cmake/modules/FindCoreFoundation.cmake
+new file mode 100644
+index 0000000..c08e529
+--- /dev/null
++++ b/cmake/modules/FindCoreFoundation.cmake
+@@ -0,0 +1,13 @@
++# Copyright (c) 2014, Samuel Gaist, <samuel.gaist@edeltech.ch>
++#
++# Redistribution and use is allowed according to the terms of the BSD license.
++# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
++
++INCLUDE(CMakeFindFrameworks)
++
++CMAKE_FIND_FRAMEWORKS(CoreFoundation)
++
++if (CoreFoundation_FRAMEWORKS)
++   set(COREFOUNDATION_LIBRARY "-framework CoreFoundation" CACHE FILEPATH "CoreFoundation framework" FORCE)
++   set(COREFOUNDATION_FOUND 1)
++endif (CoreFoundation_FRAMEWORKS)
+-- 
+2.5.0
+

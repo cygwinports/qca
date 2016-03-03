@@ -1,7 +1,7 @@
 inherit cmake qt4 qt5
 
 NAME="qca"
-VERSION=2.1.0
+VERSION=2.1.1
 RELEASE=1
 CATEGORY="Libs"
 SUMMARY="Qt Cryptographic Architecture"
@@ -9,30 +9,19 @@ DESCRIPTION="Qt Cryptographic Architecture aims to provide a straightforward
 and cross-platform crypto API, using Qt datatypes and conventions. QCA
 separates the API from the implementation, using plugins known as Providers."
 HOMEPAGE="http://delta.affinix.com/qca"
-SRC_URI="http://delta.affinix.com/download/qca/2.0/qca-${VERSION}.tar.gz"
+SRC_URI="mirror://kde/stable/qca/${VERSION}/src/qca-${VERSION}.tar.xz"
 SRC_DIR="qca-${VERSION}"
 PATCH_URI="
-	fedora/0001-dropped-unused-include.patch
-	fedora/0002-cmake-pkg-config-is-not-REQUIRED.patch
-	fedora/0003-qca-ossl-fixed-compilation-warnings.patch
-	fedora/0004-cmake-dropped-dead-variable.patch
-	fedora/0005-Fix-build-with-libressl.patch
-	fedora/0006-increased-minimum-cmake-version.patch
-	fedora/0007-cmake-warn-user-when-QCA_SUFFIX-is-not-set.patch
-	fedora/0008-cmake-apply-QCA_SUFFIX-for-cmake-config-module-names.patch
-	fedora/0009-cmake-build-for-android.patch
-	fedora/0010-fixed-compilation-on-android.patch
-	fedora/0011-simplified-md5_state_t-and-SHA1_CONTEXT-internal-str.patch
-	fedora/0012-cmake-fixed-warnings-on-android.patch
-	fedora/0013-docs-fixed-no-images-in-docs-when-build-out-of-sourc.patch
-	fedora/0014-cmake-fixed-cmake-config-module-when-used-QCA_SUFFIX.patch
-	fedora/0015-fix-library-name-in-prf-file-to-use-the-lib-name-var.patch
-	fedora/0016-move-QCA_CONFIG_NAME_BASE-definition-in-the-regular-.patch
-	fedora/0017-fixed-array-size-checking.patch
-	fedora/0019-prevent-filewatches-from-emitting-changes-when-there.patch
-	fedora/0020-put-headers-of-a-suffixed-build-in-a-suffixed-direct.patch
-	fedora/0021-properly-support-co-existing-qt4-and-qt5-versions.patch
-	fedora/0022-initialize-QCA_SUFFIX-cache-with-the-possibly-previo.patch
+	0001-plugins-qca-logger-README-fix-typo.patch
+	0002-qca-ossl-Fix-build-without-SSLv3.patch
+	0003-qca-ossl-Fix-build-without-support-for-SHA-0.patch
+	0004-qca-gnupg-default-path-to-keyrings.patch
+	0005-gnupg-resolve-symbolic-links.patch
+	0006-gnupg-fixed-keys-is-not-updating.patch
+	0007-gnupg-use-utf-8-for-keys-output.patch
+	0008-Fix-empty-strings-in-pluginPaths.patch
+	0009-Delete-dead-variable.patch
+	0010-Add-missed-file.patch
 	2.0.2-FIONREAD.patch
 "
 
