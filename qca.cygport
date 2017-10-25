@@ -1,7 +1,7 @@
 inherit cmake qt4 qt5
 
 NAME="qca"
-VERSION=2.1.1
+VERSION=2.1.3
 RELEASE=1
 CATEGORY="Libs"
 SUMMARY="Qt Cryptographic Architecture"
@@ -12,16 +12,6 @@ HOMEPAGE="http://delta.affinix.com/qca"
 SRC_URI="mirror://kde/stable/qca/${VERSION}/src/qca-${VERSION}.tar.xz"
 SRC_DIR="qca-${VERSION}"
 PATCH_URI="
-	0001-plugins-qca-logger-README-fix-typo.patch
-	0002-qca-ossl-Fix-build-without-SSLv3.patch
-	0003-qca-ossl-Fix-build-without-support-for-SHA-0.patch
-	0004-qca-gnupg-default-path-to-keyrings.patch
-	0005-gnupg-resolve-symbolic-links.patch
-	0006-gnupg-fixed-keys-is-not-updating.patch
-	0007-gnupg-use-utf-8-for-keys-output.patch
-	0008-Fix-empty-strings-in-pluginPaths.patch
-	0009-Delete-dead-variable.patch
-	0010-Add-missed-file.patch
 	2.0.2-FIONREAD.patch
 "
 
